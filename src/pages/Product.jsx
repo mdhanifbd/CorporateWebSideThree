@@ -22,7 +22,9 @@ const Product = () => {
   let firstPage = lastPage - perPage
   let allPage = info.slice(firstPage,lastPage)
   let [listItem,setListItem] = useState("")
- 
+  let [low,setLow] = useState({})
+  let [high,setHigh] = useState({})
+  
 
   let pageNumber = []
   for(let i=0; i< Math.ceil( filterShow.length >0 ? filterShow :  info.length / perPage);i++){
@@ -92,11 +94,13 @@ setFilterShow(BrandFilter)
 
 }
 
-
-
-//console.log(activegrid);
-// console.log(brand);
-
+let handlePrice = (value)=>{
+  setLow(value.low);
+  setHigh(value.high);
+  let priceShow = info.filter((item)=> item.price > value.low && item.price < value.high)
+  setFilterShow(priceShow);
+  
+}
 
  
   return (
@@ -133,12 +137,19 @@ setFilterShow(BrandFilter)
        </ul> 
         </div>
         </div>
-        <div className='pb-2 border-1 border-[#00000064] pt-2 rounded-[5px] mb-4' >
+        <div className='h-[300px] overflow-y-scroll pb-2 border-1 border-[#00000064] pt-2 rounded-[5px] mb-4' >
          <h2 className='font-dm text-[24px] text-[#262626] font-bold mt-3 pl-4' >Brand</h2>
          <ul>
           {brand.map((item)=>(
           <li onClick={()=>handleBrand(item)} className=' py-3 hover:bg-gray-200 rounded-[5px] font-dm text-[16px] text-[#262626] font-normal cursor-pointer capitalize pl-8' >{item}</li>
           ))}
+         </ul>
+        </div>
+         <div className='pb-2 border-1 border-[#00000064] pt-2 rounded-[5px] mb-4' >
+         <h2 className='font-dm text-[24px] text-[#262626] font-bold mt-3 pl-4' >Price</h2>
+         <ul className='pl-4' >
+         <li onClick={()=>handlePrice({low:0,high:10})} >$0 - $9</li>
+         <li onClick={()=>handlePrice({low:10,high:19})} >$10 - $19</li>
          </ul>
         </div>
         </div> 
@@ -155,7 +166,7 @@ setFilterShow(BrandFilter)
        <div className='' >
         <label className='mr-3'  htmlFor=''>Sort by:</label>
         <select onChange={handleByPrice} name='' id='' className='py-1 px-4 border-2 border-[#262626]' >
-          <option value="default"><h4>Price</h4></option>
+          <h4>Price</h4>
           <option value="Low to High"><h4>Low to High</h4></option>
           <option value="High ti Low"><h4>High ti Low</h4></option>
         </select>

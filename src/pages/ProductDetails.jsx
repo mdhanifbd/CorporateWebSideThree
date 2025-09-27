@@ -1,17 +1,19 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import Container from "../components/Container";
 import { FaMinus, FaPlus, FaStar } from "react-icons/fa6";
 import { FaStarHalfAlt } from "react-icons/fa";
 import { FaRegStar } from "react-icons/fa6";
-import Oval1 from "../assets/Oval1.png";
-import Oval2 from "../assets/Oval2.png";
-import Oval3 from "../assets/Oval3.png";
-import Oval4 from "../assets/Oval4.png";
-import Oval5 from "../assets/Oval5.png";
+import { Bounce, ToastContainer, toast } from 'react-toastify';
+import { useDispatch } from "react-redux";
+import { addTocart } from "../components/slice/productSlice";
+
+
 
 const ProductDetails = () => {
+  let dispatch = useDispatch()
+  let navigate = useNavigate()
   let {id} = useParams();
   let [singleProduct, setSingleProduct] = useState({});
   //console.log(productId);
@@ -62,6 +64,24 @@ const ProductDetails = () => {
     // console.log("ami",e.target.value);
     //setPerPage(e.target.value)
   };
+ //  console.log(singleProduct);
+   
+ let discount =(singleProduct.price * singleProduct.
+discountPercentage) / 100
+//console.log(discount);
+let mainPrice = singleProduct.price  - discount
+// console.log(mainPrice);
+
+
+let handleCart = (item)=>{
+ // console.log(item);
+ dispatch(addTocart({...item,quantity:1}))
+  toast("Add to Cart Successfully Done");
+//   setTimeout(()=>{ 
+//     navigate("/cart")
+// },2000)
+}
+
 
   return (
     <section>
@@ -86,73 +106,65 @@ const ProductDetails = () => {
               <div className="">
                 <p>1 Review</p>
               </div>
+              <ToastContainer
+              position="top-center"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick={false}
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+              transition={Bounce} />
+            </div>
+            <div className='flex items-center gap-5 mt-3'>
+              <div className=''>
+                <del className='font-dm text-[#767676] text-[16px] font-normal'>${singleProduct.price}</del>
+              </div>
+              <div className=''><h5 className="text-[#767676]" >${mainPrice.toFixed(2)}</h5></div>
             </div>
             <div className="mt-3">
               <div className="">
                 <p className="font-dm text-[#262626] font-bold pb-4">
-                  Price:{" "}
-                  <span className="text-[#767676] pl-6">
-                    ${singleProduct.price}
+                  Product Name:{" "}
+                  <span className="text-[#767676] pl-3">
+                    ${singleProduct.title}
                   </span>
                 </p>
                 <p className="font-dm text-[#262626] font-bold pb-4">
                   Stock:{" "}
-                  <span className="text-[#767676] pl-6">
+                  <span className="text-[#767676] pl-3">
                     ${singleProduct.stock}
                   </span>
                 </p>
                 <p className="font-dm text-[#262626] font-bold pb-4">
-                  Brand:{" "}
+                  Warranty Information:{" "}
                   <span className="text-[#767676] pl-6">
-                    {singleProduct.brand}
+                    {singleProduct.warrantyInformation}
                   </span>
                 </p>
-                {/* <p className="font-dm text-[#262626] font-bold pb-4">
-                  Status:{" "}
-                  <span className="text-[#767676] pl-6">
-                    ${singleProduct.availabilityStatus}
-                  </span>
-                </p> */}
-              </div>
+             </div>
             </div>
             <div className=" border-1 border-[rgb(240,237,237)]">
               <div className="flex items-center gap-5 py-4">
                 <div className="">
                   <h4 className=" font-dm text-[#262626] font-bold">COLOR:</h4>
                 </div>
-                <div className="flex ">
-                  <img
-                    className="p-2 transition-transform duration-100 hover:scale-225"
-                    src={Oval1}
-                    alt=""
-                  />
-                  <img
-                    className="p-2 transition-transform duration-100 hover:scale-225"
-                    src={Oval2}
-                    alt=""
-                  />
-                  <img
-                    className="p-2 transition-transform duration-300 hover:scale-225"
-                    src={Oval3}
-                    alt=""
-                  />
-                  <img
-                    className="p-2 transition-transform duration-300 hover:scale-225"
-                    src={Oval4}
-                    alt=""
-                  />
-                  <img
-                    className="p-2 transition-transform duration-300 hover:scale-225"
-                    src={Oval5}
-                    alt=""
-                  />
-                </div>
+              <div className='flex  gap-5 pl-8'>
+                <div className='w-4 h-4 rounded-full bg-[#979797]'></div>
+                <div className='w-4 h-4 rounded-full bg-[#FF8686]'></div>
+                <div className='w-4 h-4 rounded-full bg-[#7ED321]'></div>
+                <div className='w-4 h-4 rounded-full bg-[#B6B6B6]'></div>
+                <div className='w-4 h-4 rounded-full bg-[#15CBA5]'></div>
+              </div> 
               </div>
               <div className="flex gap-15">
                 <div className="">
                   <h3 className=" font-dm text-[#262626] font-bold">SIZE:</h3>
                 </div>
-                <div className="flex items-center gap-3 border border-[rgb(201,195,195)] px-15 py-1 mb-5">
+                <div className="flex items-center gap-3 border border-[rgb(201,195,195)] px-15 py-1 ">
                   <div className="">
                     <label className="pr-4" htmlFor="">
                       Show:
@@ -171,24 +183,7 @@ const ProductDetails = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex gap-4">
-                <div className="">
-                  <h4 className=" font-dm text-[#262626] font-bold">
-                    QUANTITY:
-                  </h4>
-                </div>
-                <div className=" flex items-center gap-3 border 1px solid border-[rgb(201,195,195)] px-9 py-1 mb-5">
-                  <FaMinus
-                    onClick={handleDecrement}
-                    className="cursor-pointer ml-2"
-                  />
-                  <h2>{count}</h2>
-                  <FaPlus
-                    onClick={handleIncrement}
-                    className="cursor-pointer mr-2"
-                  />
-                </div>
-              </div>
+               
               <div className="flex gap-3  border 1px solid border-[rgb(247,238,238)] py-5">
                 <div className="inline-block">
                   <h5 className=" font-dm text-[#262626] font-bold">STATUS:</h5>
@@ -205,7 +200,7 @@ const ProductDetails = () => {
                   Add to Wish List
                 </button>
               </div>
-              <div>
+               <div onClick={()=>handleCart(singleProduct)} > 
                 <button className="text-[#262626] text-[14px] font-bold font-dm px-[45px]  py-[8px]  border-2 border-[#262626] hover:bg-[#262626] hover:text-white hover:border-2 transition-all duration-300 ease-in-out cursor-pointer rounded-[5px]">
                   Add to Cart
                 </button>

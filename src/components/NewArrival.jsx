@@ -19,7 +19,7 @@ function SampleNextArrow(props) {
     <div
       className="absolute right-[1px] top-[50%] w-[40px] h-[40px] leading-[40px] text-center rounded-full translate-y-[-50%] cursor-pointer z-[1] bg-[gray] mr-5"
       onClick={onClick}
-    ><GrFormPrevious className='inline-block'/>
+    >< MdNavigateNext className='inline-block'/>
     </div>
   );
 }
@@ -30,7 +30,7 @@ function SamplePrevArrow(props) {
     <div
       className="absolute left-[9px] top-[50%] w-[40px] h-[40px] leading-[40px] text-center rounded-full translate-y-[-50%] cursor-pointer z-[1] bg-[gray]"
       onClick={onClick}
-    > <MdNavigateNext className='inline-block' />
+    > < GrFormPrevious className='inline-block' />
     </div>
   );
 }

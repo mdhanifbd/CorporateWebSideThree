@@ -7,6 +7,7 @@ import ProductDetails from './pages/ProductDetails'
 import About from './pages/About'
 import Contacts from './pages/Contacts'
 import Journal from './pages/Journal'
+import Cart from './pages/Cart'
 
 
 
@@ -20,7 +21,7 @@ function App() {
      <Route path ="/about" element ={<About/>}></Route>
      <Route path ="/contacts" element ={<Contacts/>}></Route>
      <Route path ="/journal" element ={<Journal/>}></Route>
-     
+     <Route path="/cart" element={<Cart/>}></Route>
   </Route> 
  ))
 
