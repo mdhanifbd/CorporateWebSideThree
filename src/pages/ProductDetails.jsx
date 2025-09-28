@@ -75,11 +75,11 @@ let mainPrice = singleProduct.price  - discount
 
 let handleCart = (item)=>{
  // console.log(item);
- dispatch(addTocart({...item,quantity:1}))
+ dispatch(addTocart({...item, qun: 1}))
   toast("Add to Cart Successfully Done");
-//   setTimeout(()=>{ 
-//     navigate("/cart")
-// },2000)
+  setTimeout(()=>{ 
+    navigate("/cart")
+},2000)
 }
 
 
